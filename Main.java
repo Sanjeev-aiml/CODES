@@ -8,6 +8,7 @@ class Product {
     private int productPrice;
     private String productDescription;
     private int productQuantity;
+    private String productReview;
 
     // Getters and Setters
     public int getProductId() {
@@ -49,6 +50,14 @@ class Product {
     public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
     }
+
+    public String getProductReview() {
+        return productReview;
+    }
+
+    public void setProductReview(String productReview) {
+        this.productReview = productReview;
+    }
 }
 
 public class Main {
@@ -65,14 +74,8 @@ public class Main {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
-            if (!scanner.hasNextInt()) {
-                System.out.println("Invalid input! Please enter a number.");
-                scanner.next(); // Consume invalid input
-                continue;
-            }
-
             int choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine(); // Consume newline character
 
             switch (choice) {
                 case 1:
@@ -80,12 +83,15 @@ public class Main {
                     String name = scanner.nextLine();
                     System.out.print("Enter product price: ");
                     int price = scanner.nextInt();
-                    scanner.nextLine(); 
+                    scanner.nextLine();
                     System.out.print("Enter product description: ");
                     String description = scanner.nextLine();
                     System.out.print("Enter product quantity: ");
                     int quantity = scanner.nextInt();
-                    add(name, price, description, quantity);
+                    scanner.nextLine(); // Consume newline
+                    System.out.print("Enter product review: ");
+                    String review = scanner.nextLine();
+                    add(name, price, description, quantity, review);
                     break;
 
                 case 2:
@@ -135,16 +141,18 @@ public class Main {
             System.out.println("Price: " + product.getProductPrice());
             System.out.println("Description: " + product.getProductDescription());
             System.out.println("Quantity: " + product.getProductQuantity());
+            System.out.println("Review: " + product.getProductReview());
             System.out.println("---------------------------");
         }
     }
 
-    public static void add(String name, int price, String description, int quantity) {
+    public static void add(String name, int price, String description, int quantity, String review) {
         Product product = new Product();
         product.setProductName(name);
         product.setProductPrice(price);
         product.setProductDescription(description);
         product.setProductQuantity(quantity);
+        product.setProductReview(review);
         product.setProductId(listOfProducts.size() + 1);
         listOfProducts.add(product);
         System.out.println("Product added successfully!");
@@ -183,7 +191,7 @@ public class Main {
 
             System.out.print("Enter new product price (current: " + productToUpdate.getProductPrice() + "): ");
             int newPrice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
             productToUpdate.setProductPrice(newPrice);
 
             System.out.print("Enter new product description (current: " + productToUpdate.getProductDescription() + "): ");
@@ -192,7 +200,12 @@ public class Main {
 
             System.out.print("Enter new product quantity (current: " + productToUpdate.getProductQuantity() + "): ");
             int newQuantity = scanner.nextInt();
+            scanner.nextLine();
             productToUpdate.setProductQuantity(newQuantity);
+
+            System.out.print("Enter new product review (current: " + productToUpdate.getProductReview() + "): ");
+            String newReview = scanner.nextLine();
+            productToUpdate.setProductReview(newReview);
 
             System.out.println("Product updated successfully!");
         } else {
@@ -210,6 +223,7 @@ public class Main {
                 System.out.println("Price: " + product.getProductPrice());
                 System.out.println("Description: " + product.getProductDescription());
                 System.out.println("Quantity: " + product.getProductQuantity());
+                System.out.println("Review: " + product.getProductReview());
                 System.out.println("---------------------------");
                 found = true;
             }
